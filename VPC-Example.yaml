@@ -1,0 +1,8 @@
+Description: |
+  this is an example for creating a VPC using cloudformation 
+Resources:
+  VpcExample:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
