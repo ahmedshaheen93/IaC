@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  this is an example for creating a EC2 with attached securityGroup using cloudformation 
+Parameters:
+  webAppVPC:
+    Description: a web app vpc parameter
+    Type: AWS::EC2::VPC::Id
+  webAppImageId:
+    Description: a web app image id parameter
+    Type: AWS::EC2::Image::Id
+  publicSubnet:
+    Description: Subnet to be used for our Web Server
+    Type: AWS::EC2::Subnet::Id
+  keyName:
+    Description: KeyName for EC2
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+  webAppEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: web app securityGroup
+      VpcId:
+        Ref: webAppVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        
+  webAppEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !Ref webAppImageId
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: "0"
+          GroupSet:
+            - Ref: webAppEC2SecurityGroup
+          SubnetId:
+            Ref: publicSubnet
+      KeyName: !Ref keyName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd
+
+

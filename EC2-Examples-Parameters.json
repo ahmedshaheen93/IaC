@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "webAppVPC",
+    "ParameterValue": "vpc-0b5fc407398e9061c"
+  },
+  {
+    "ParameterKey": "webAppImageId",
+    "ParameterValue": "ami-02b972fec07f1e659"
+  },
+  {
+    "ParameterKey": "publicSubnet",
+    "ParameterValue": "subnet-011f62e9c48a94b32"
+  },
+  {
+    "ParameterKey": "keyName",
+    "ParameterValue": "IaCKey"
+  }
+]
