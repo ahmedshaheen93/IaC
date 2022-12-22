@@ -11,13 +11,13 @@ Parameters:
   MYHomeCIDR:
     Description: my Home ip
     Type: String
-    Default: 196.221.189.130
+    Default: 196.221.189.130/32
 Resources:
   JumpboxSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: !ImportValue IaC-VPC
-      GroupDescription: Allow SSH from anywhere
+      GroupDescription: Allow SSH from my home address ip
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -195,7 +195,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: !Ref AmiID
-      KeyName: IaCKey
+      KeyName: jumbox
       SecurityGroupIds:
         - !Ref JumpboxSecurityGroup
       SubnetId: !ImportValue IaC-Public-Subnet-1
@@ -208,7 +208,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: !Ref AmiID
-      KeyName: IaCKey
+      KeyName: jumbox
       SecurityGroupIds:
         - !Ref JumpboxSecurityGroup
       SubnetId: !ImportValue IaC-Public-Subnet-2
